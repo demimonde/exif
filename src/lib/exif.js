@@ -83,8 +83,12 @@ function readEXIFData(file, start) {
   const tags = readTags(file, tiffOffset, tiffOffset + firstIFDOffset, TiffTags, bigEnd)
 
   let tag
-  if (tags.ExifIFDPointer) {
-    const exifData = readTags(file, tiffOffset, tiffOffset + tags.ExifIFDPointer, ExifTags, bigEnd)
+  const {
+    'ExifIFDPointer': ExifIFDPointer,
+    'GPSInfoIFDPointer': GPSInfoIFDPointer,
+  } = tags
+  if (ExifIFDPointer) {
+    const exifData = readTags(file, tiffOffset, tiffOffset + ExifIFDPointer, ExifTags, bigEnd)
     for (tag in exifData) {
       switch (tag) {
       case 'LightSource' :
@@ -122,8 +126,8 @@ function readEXIFData(file, start) {
     }
   }
 
-  if (tags.GPSInfoIFDPointer) {
-    const gpsData = readTags(file, tiffOffset, tiffOffset + tags.GPSInfoIFDPointer, GPSTags, bigEnd)
+  if (GPSInfoIFDPointer) {
+    const gpsData = readTags(file, tiffOffset, tiffOffset + GPSInfoIFDPointer, GPSTags, bigEnd)
     for (tag in gpsData) {
       switch (tag) {
       case 'GPSVersionID' :
@@ -270,7 +274,7 @@ const StringValues = {
     [3]: 'DSC',
   },
 
-  'Components': {
+  Components: {
     [0]: '',
     [1]: 'Y',
     [2]: 'Cb',

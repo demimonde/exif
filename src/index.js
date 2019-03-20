@@ -7,7 +7,7 @@ import { findEXIFinJPEG } from './lib/exif'
 export function handleBinaryFile(binFile) {
   const data = findEXIFinJPEG(binFile)
   const iptcdata = findIPTCinJPEG(binFile)
-  return { data, iptcdata }
+  return { 'data': data, 'iptcdata': iptcdata }
 }
 
 // RobG
