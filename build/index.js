@@ -1,29 +1,25 @@
-const { debuglog } = require('util');
-
-const LOG = debuglog('@metadata/exif')
+const findIPTCinJPEG = require('./lib/iptc');
+const { findEXIFinJPEG } = require('./lib/exif');
 
 /**
- * Reads Files Metadata In The Browser.
- * @param {Config} [config] Options for the program.
- * @param {boolean} [config.shouldRun=true] A boolean option. Default `true`.
- * @param {string} config.text A text to return.
+ * Extract metadata from the ArrayBuffer.
+ * @param {ArrayBuffer} binFile The file as ArrayBuffer.
+ * @param {Config} config Options for the program.
+ * @param {boolean} [config.parseDates=false] Parse EXIF dates into JS dates. Default `false`.
+ * @param {('dms'|'dd')} [config.coordinates="dms"] Return coordinates either as DMS (degrees, minutes, seconds) or DD (decimal degrees). Default `dms`.
  */
-               async function exif(config = {}) {
-  const {
-    shouldRun = true,
-    text,
-  } = config
-  if (!shouldRun) return
-  LOG('@metadata/exif called with %s', text)
-  return text
+       function handleBinaryFile(binFile, config) {
+  const data = findEXIFinJPEG(binFile, config)
+  const iptcdata = findIPTCinJPEG(binFile)
+  return { 'data': data, 'iptcdata': iptcdata }
 }
 
 /* documentary types/index.xml */
 /**
  * @typedef {Object} Config Options for the program.
- * @prop {boolean} [shouldRun=true] A boolean option. Default `true`.
- * @prop {string} text A text to return.
+ * @prop {boolean} [parseDates=false] Parse EXIF dates into JS dates. Default `false`.
+ * @prop {('dms'|'dd')} [coordinates="dms"] Return coordinates either as DMS (degrees, minutes, seconds) or DD (decimal degrees). Default `dms`.
  */
 
 
-module.exports = exif
+module.exports.handleBinaryFile = handleBinaryFile

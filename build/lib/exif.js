@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-import readThumbnailImage from './thumbnail'
-import TiffTags from '../tags/tiff'
-import ExifTags from '../tags/exif'
-import GPSTags from '../tags/gps'
-import { getStringFromDB, readTags } from './'
-import { dms2dd } from './util'
+const readThumbnailImage = require('./thumbnail');
+const TiffTags = require('../tags/tiff');
+const ExifTags = require('../tags/exif');
+const GPSTags = require('../tags/gps');
+const { getStringFromDB, readTags } = require('./');
+const { dms2dd } = require('./util');
 
 const debug = false
 
@@ -12,7 +12,7 @@ const debug = false
  * @param {ArrayBuffer} file
  * @param {import('../index').Config} [config]
  */
-export function findEXIFinJPEG(file, config) {
+       function findEXIFinJPEG(file, config) {
   const dataView = new DataView(file)
 
   if (debug) console.log('Got file of length ' + file.byteLength)
@@ -313,3 +313,5 @@ const StringValues = {
     [6]: 'B',
   },
 }
+
+module.exports.findEXIFinJPEG = findEXIFinJPEG

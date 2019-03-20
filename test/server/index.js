@@ -1,7 +1,6 @@
 /* eslint-env browser */
-import { handleBinaryFile, getDate } from '/src/'
+import { handleBinaryFile } from '/src/'
 
 window.EXIF = {
   handleBinaryFile,
-  getDate,
 }

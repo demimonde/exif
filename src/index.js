@@ -2,20 +2,21 @@ import findIPTCinJPEG from './lib/iptc'
 import { findEXIFinJPEG } from './lib/exif'
 
 /**
- * @param {ArrayBuffer} binFile
+ * Extract metadata from the ArrayBuffer.
+ * @param {ArrayBuffer} binFile The file as ArrayBuffer.
+ * @param {Config} config Options for the program.
+ * @param {boolean} [config.parseDates=false] Parse EXIF dates into JS dates. Default `false`.
+ * @param {('dms'|'dd')} [config.coordinates="dms"] Return coordinates either as DMS (degrees, minutes, seconds) or DD (decimal degrees). Default `dms`.
  */
-export function handleBinaryFile(binFile) {
-  const data = findEXIFinJPEG(binFile)
+export function handleBinaryFile(binFile, config) {
+  const data = findEXIFinJPEG(binFile, config)
   const iptcdata = findIPTCinJPEG(binFile)
   return { 'data': data, 'iptcdata': iptcdata }
 }
 
-// RobG
-// https://stackoverflow.com/a/43084928/1267201
+/* documentary types/index.xml */
 /**
- * Converts EXIF date to JS date.
+ * @typedef {Object} Config Options for the program.
+ * @prop {boolean} [parseDates=false] Parse EXIF dates into JS dates. Default `false`.
+ * @prop {('dms'|'dd')} [coordinates="dms"] Return coordinates either as DMS (degrees, minutes, seconds) or DD (decimal degrees). Default `dms`.
  */
-export const getDate = (s) => {
-  const [year, month, date, hour, min, sec] = s.split(/\D/)
-  return new Date(year,month-1,date,hour,min,sec)
-}

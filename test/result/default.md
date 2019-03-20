@@ -1,4 +1,4 @@
-## !returns the correct output
+## returns the correct output
 photo.jpg
 
 /* expected */
@@ -11,7 +11,8 @@ photo.jpg
     "YResolution": 72,
     "ResolutionUnit": 2,
     "DateTime": "2015:06:20 23:10:14",
-    "ExifIFDPointer": 176,
+    "ExifIFDPointer": 188,
+    "GPSInfoIFDPointer": 618,
     "ExposureTime": 0.04,
     "FNumber": 1.6,
     "ExposureProgram": "Aperture priority",
@@ -38,6 +39,19 @@ photo.jpg
     "ExposureMode": 0,
     "WhiteBalance": "Auto white balance",
     "SceneCaptureType": "Standard",
+    "GPSVersionID": "2.3.0.0",
+    "GPSLatitudeRef": "N",
+    "GPSLatitude": [
+      40,
+      15,
+      3.2471999364524584
+    ],
+    "GPSLongitudeRef": "W",
+    "GPSLongitude": [
+      75,
+      7,
+      57.5688
+    ],
     "thumbnail": {}
   },
   "iptcdata": {}

@@ -12,7 +12,7 @@
     "test-build": "ALAMODE_ENV=test-build yarn test",
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc documentary -o README.md",
-    "b": "alamode src -o build -s",
+    "b": "alamode src -o build -s -i .eslintrc",
     "depack": "depack-dev depack.js -c -o dist/exif.js -a --isolation_mode IIFE",
     "d": "yarn-s d1",
     "d1": "NODE_DEBUG=doc doc src/index.js -g",

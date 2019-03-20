@@ -1,10 +1,10 @@
 <types>
   <type name="Config" desc="Options for the program.">
-    <prop boolean name="shouldRun" default="true">
-      A boolean option.
+    <prop boolean name="parseDates" default="false">
+      Parse EXIF dates into JS dates.
     </prop>
-    <prop string name="text">
-      A text to return.
+    <prop type="('dms'|'dd')" name="coordinates" default="dms">
+      Return coordinates either as DMS (degrees, minutes, seconds) or DD (decimal degrees).
     </prop>
   </type>
 </types>
