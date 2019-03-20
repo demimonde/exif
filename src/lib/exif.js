@@ -19,9 +19,8 @@ export function findEXIFinJPEG(file) {
     return false // not a valid jpeg
   }
 
-  var offset = 2,
-    length = file.byteLength,
-    marker
+  const length = file.byteLength
+  let offset = 2, marker
 
   while (offset < length) {
     if (dataView.getUint8(offset) != 0xFF) {
@@ -57,11 +56,8 @@ function readEXIFData(file, start) {
     return false
   }
 
-  var bigEnd,
-    tags, tag,
-    exifData, gpsData,
-    tiffOffset = start + 6
-
+  const tiffOffset = start + 6
+  let bigEnd
   // test for TIFF validity and endianness
   if (file.getUint16(tiffOffset) == 0x4949) {
     bigEnd = false
@@ -77,17 +73,18 @@ function readEXIFData(file, start) {
     return false
   }
 
-  var firstIFDOffset = file.getUint32(tiffOffset+4, !bigEnd)
+  const firstIFDOffset = file.getUint32(tiffOffset+4, !bigEnd)
 
   if (firstIFDOffset < 0x00000008) {
     if (debug) console.log('Not valid TIFF data! (First offset less than 8)', file.getUint32(tiffOffset+4, !bigEnd))
     return false
   }
 
-  tags = readTags(file, tiffOffset, tiffOffset + firstIFDOffset, TiffTags, bigEnd)
+  const tags = readTags(file, tiffOffset, tiffOffset + firstIFDOffset, TiffTags, bigEnd)
 
+  let tag
   if (tags.ExifIFDPointer) {
-    exifData = readTags(file, tiffOffset, tiffOffset + tags.ExifIFDPointer, ExifTags, bigEnd)
+    const exifData = readTags(file, tiffOffset, tiffOffset + tags.ExifIFDPointer, ExifTags, bigEnd)
     for (tag in exifData) {
       switch (tag) {
       case 'LightSource' :
@@ -109,16 +106,16 @@ function readEXIFData(file, start) {
         break
 
       case 'ExifVersion' :
-      case 'FlashpixVersion' :
+      case 'FlashpixVersion':
         exifData[tag] = String.fromCharCode(exifData[tag][0], exifData[tag][1], exifData[tag][2], exifData[tag][3])
         break
 
       case 'ComponentsConfiguration' :
         exifData[tag] =
-                        StringValues.Components[exifData[tag][0]] +
-                        StringValues.Components[exifData[tag][1]] +
-                        StringValues.Components[exifData[tag][2]] +
-                        StringValues.Components[exifData[tag][3]]
+          StringValues.Components[exifData[tag][0]] +
+          StringValues.Components[exifData[tag][1]] +
+          StringValues.Components[exifData[tag][2]] +
+          StringValues.Components[exifData[tag][3]]
         break
       }
       tags[tag] = exifData[tag]
@@ -126,14 +123,14 @@ function readEXIFData(file, start) {
   }
 
   if (tags.GPSInfoIFDPointer) {
-    gpsData = readTags(file, tiffOffset, tiffOffset + tags.GPSInfoIFDPointer, GPSTags, bigEnd)
+    const gpsData = readTags(file, tiffOffset, tiffOffset + tags.GPSInfoIFDPointer, GPSTags, bigEnd)
     for (tag in gpsData) {
       switch (tag) {
       case 'GPSVersionID' :
         gpsData[tag] = gpsData[tag][0] +
-                        '.' + gpsData[tag][1] +
-                        '.' + gpsData[tag][2] +
-                        '.' + gpsData[tag][3]
+          '.' + gpsData[tag][1] +
+          '.' + gpsData[tag][2] +
+          '.' + gpsData[tag][3]
         break
       }
       tags[tag] = gpsData[tag]

@@ -1,8 +1,9 @@
-import { makeTestSuite } from 'zoroaster'
+import makeTestSuite from '@zoroaster/mask'
 import Context from '../context'
 import exif from '../../src'
 
-const ts = makeTestSuite('test/result', {
+// export default
+makeTestSuite('test/result', {
   async getResults(input) {
     const res = await exif({
       text: input,
@@ -11,5 +12,3 @@ const ts = makeTestSuite('test/result', {
   },
   context: Context,
 })
-
-// export default ts

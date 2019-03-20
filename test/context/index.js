@@ -1,33 +1,24 @@
-import { resolve } from 'path'
-import { debuglog } from 'util'
+// import { resolve } from 'path'
+// import { debuglog } from 'util'
+import { readBuffer } from '@wrote/read'
 
-const LOG = debuglog('@metadata/exif')
-
-const FIXTURE = resolve(__dirname, '../fixture')
+// const FIXTURE = resolve('test/fixture')
 
 /**
  * A testing context for the package.
  */
 export default class Context {
   async _init() {
-    LOG('init context')
-  }
-  /**
-   * Example method.
-   */
-  example() {
-    return 'OK'
+    this.photo = (await readBuffer('test/fixture/photo.jpg')).buffer
+    // LOG('init context')
   }
   /**
    * Path to the fixture file.
    */
-  get FIXTURE() {
-    return resolve(FIXTURE, 'test.txt')
-  }
-  get SNAPSHOT_DIR() {
-    return resolve(__dirname, '../snapshot')
-  }
+  // get FIXTURE() {
+  // return join(FIXTURE, 'test.txt')
+  // }
   async _destroy() {
-    LOG('destroy context')
+    // LOG('destroy context')
   }
 }

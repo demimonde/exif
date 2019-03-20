@@ -1,21 +1,22 @@
-import { equal, ok } from 'zoroaster/assert'
+import { equal } from 'zoroaster/assert'
 import Context from '../context'
-import exif from '../../src'
+import { handleBinaryFile } from '../../src'
 
 /** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: Context,
+  persistentContext: Context,
   'is a function'() {
     equal(typeof exif, 'function')
   },
-  async 'calls package without error'() {
-    await exif()
+  async '!handles a JPG file'({ photo }) {
+    const res = handleBinaryFile(photo)
+    return res
   },
   async 'gets a link to the fixture'({ FIXTURE }) {
-    const res = await exif({
-      text: FIXTURE,
-    })
-    ok(res, FIXTURE)
+    // const res = await exif({
+    //   text: FIXTURE,
+    // })
+    // ok(res, FIXTURE)
   },
 }
 
