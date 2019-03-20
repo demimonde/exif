@@ -1,6 +1,6 @@
 # @metadata/exif
 
-[![npm version](https://badge.fury.io/js/@metadata/exif.svg)](https://npmjs.org/package/@metadata/exif)
+[![npm version](https://badge.fury.io/js/%40metadata%2Fexif.svg)](https://npmjs.org/package/@metadata/exif)
 
 `@metadata/exif` is Reads Files Metadata In The Browser.
 
@@ -12,7 +12,7 @@ yarn add -E @metadata/exif
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`exif(arg1: string, arg2?: boolean)`](#mynewpackagearg1-stringarg2-boolean-void)
+- [`exif(arg1: string, arg2?: boolean)`](#exifarg1-stringarg2-boolean-void)
   * [`Config`](#type-config)
 - [Copyright](#copyright)
 
@@ -34,10 +34,10 @@ Call this function to get the result you want.
 
 __<a name="type-config">`Config`</a>__: Options for the program.
 
-|   Name    |   Type    |    Description    | Default |
-| --------- | --------- | ----------------- | ------- |
-| shouldRun | _boolean_ | A boolean option. | `true`  |
-| __text*__ | _string_  | A text to return. | -       |
+|    Name     |      Type       |                                      Description                                      | Default |
+| ----------- | --------------- | ------------------------------------------------------------------------------------- | ------- |
+| parseDates  | _boolean_       | Parse EXIF dates into JS dates.                                                       | `false` |
+| coordinates | _('dms'\|'dd')_ | Return coordinates either as DMS (degrees, minutes, seconds) or DD (decimal degrees). | `dms`   |
 
 ```js
 /* yarn example/ */
@@ -51,7 +51,7 @@ import exif from '@metadata/exif'
 })()
 ```
 ```
-example
+
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>

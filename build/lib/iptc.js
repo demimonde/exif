@@ -40,17 +40,18 @@ const debug = false
   }
 }
 
+// https://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/IPTC.html
 const IptcFieldMap = {
-  0x78: 'caption',
-  0x6E: 'credit',
-  0x19: 'keywords',
-  0x37: 'dateCreated',
-  0x50: 'byline',
-  0x55: 'bylineTitle',
-  0x7A: 'captionWriter',
-  0x69: 'headline',
-  0x74: 'copyright',
-  0x0F: 'category',
+  [120]: 'Caption-Abstract', // string[0,2000]
+  [110]: 'Credit', // string[0,32]
+  [25]: 'Keywords', // string[0,64]+
+  [55]: 'DateCreated', // digits[8]
+  [80]: 'By-line', // string[0,32]+
+  [85]: 'By-lineTitle', // string[0,32]+
+  [122]: 'Writer-Editor', // string[0,32]+
+  [105]: 'Headline', // string[0,256]
+  [116]: 'CopyrightNotice', // string[0,128]
+  [15]: 'Category', // string[0,3]
 }
 
 function readIPTCData(file, startOffset, sectionLength){

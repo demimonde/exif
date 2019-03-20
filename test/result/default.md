@@ -55,6 +55,30 @@ photo.jpg
     ],
     "thumbnail": {}
   },
-  "iptcdata": {}
+  "iptcdata": {
+    "Category": "ANI",
+    "Caption-Abstract": "A black cat looking into the camera.",
+    "Keywords": [
+      "Animal",
+      "Cat",
+      "Pet"
+    ],
+    "Credit": "Art Deco",
+    "DateCreated": "20150620",
+    "By-line": [
+      "Anton",
+      "His Friend"
+    ],
+    "By-lineTitle": [
+      "Photographer",
+      "Owner"
+    ],
+    "Writer-Editor": [
+      "Art",
+      "Deco"
+    ],
+    "Headline": "Black Cat",
+    "CopyrightNotice": "© Ã®† ∂éçø 2019, All rights reserved."
+  }
 }
 /**/
