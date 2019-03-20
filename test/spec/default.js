@@ -17,6 +17,20 @@ const T = {
     })
     return { GPSLatitude, GPSLongitude }
   },
+  async 'parses dates'({ photo }) {
+    const { data: {
+      DateTime,
+      DateTimeOriginal,
+      DateTimeDigitized,
+    } } = handleBinaryFile(photo, {
+      parseDates: true,
+    })
+    return {
+      DateTime: DateTime.toISOString(),
+      DateTimeOriginal: DateTimeOriginal.toISOString(),
+      DateTimeDigitized: DateTimeDigitized.toISOString(),
+    }
+  },
   async 'gets a link to the fixture'({ FIXTURE }) {
     // const res = await exif({
     //   text: FIXTURE,

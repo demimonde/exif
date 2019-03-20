@@ -4,7 +4,7 @@ import TiffTags from '../tags/tiff'
 import ExifTags from '../tags/exif'
 import GPSTags from '../tags/gps'
 import { getStringFromDB, readTags } from './'
-import { dms2dd } from './util'
+import { dms2dd, getDate } from './util'
 
 const debug = false
 
@@ -86,6 +86,10 @@ function readEXIFData(file, start, config = {}) {
 
   const tags = readTags(file, tiffOffset, tiffOffset + firstIFDOffset, TiffTags, bigEnd)
 
+  if (parseDates && tags['DateTime']) {
+    tags['DateTime'] = getDate(tags['DateTime'])
+  }
+
   let tagName
   const {
     'ExifIFDPointer': ExifIFDPointer,
@@ -96,30 +100,35 @@ function readEXIFData(file, start, config = {}) {
     for (tagName in exifData) {
       let tag = exifData[tagName]
       switch (tagName) {
-      case 'LightSource' :
-      case 'Flash' :
-      case 'MeteringMode' :
-      case 'ExposureProgram' :
-      case 'SensingMethod' :
-      case 'SceneCaptureType' :
-      case 'SceneType' :
-      case 'CustomRendered' :
-      case 'WhiteBalance' :
-      case 'GainControl' :
-      case 'Contrast' :
-      case 'Saturation' :
-      case 'Sharpness' :
-      case 'SubjectDistanceRange' :
-      case 'FileSource' :
+      case 'LightSource':
+      case 'Flash':
+      case 'MeteringMode':
+      case 'ExposureProgram':
+      case 'SensingMethod':
+      case 'SceneCaptureType':
+      case 'SceneType':
+      case 'CustomRendered':
+      case 'WhiteBalance':
+      case 'GainControl':
+      case 'Contrast':
+      case 'Saturation':
+      case 'Sharpness':
+      case 'SubjectDistanceRange':
+      case 'FileSource':
         tag = StringValues[tagName][tag]
         break
-
-      case 'ExifVersion' :
+      case 'DateTimeOriginal':
+      case 'DateTimeDigitized':
+        if (parseDates) {
+          tag = getDate(tag)
+        }
+        break
+      case 'ExifVersion':
       case 'FlashpixVersion':
         tag = String.fromCharCode(tag[0], tag[1], tag[2], tag[3])
         break
 
-      case 'ComponentsConfiguration' :
+      case 'ComponentsConfiguration':
         tag =
           StringValues.Components[tag[0]] +
           StringValues.Components[tag[1]] +
@@ -132,9 +141,7 @@ function readEXIFData(file, start, config = {}) {
   }
 
   if (GPSInfoIFDPointer) {
-    const isDD = coordinates == 'dd'
     const gpsData = readTags(file, tiffOffset, tiffOffset + GPSInfoIFDPointer, GPSTags, bigEnd)
-    let GPSLatitudeRef, GPSLongitudeRef
     for (tagName in gpsData) {
       let tag = gpsData[tagName]
       switch (tagName) {
@@ -142,32 +149,18 @@ function readEXIFData(file, start, config = {}) {
         const [t,t1,t2,t3] = tag
         tag = [t,t1,t2,t3].join('.')
         break
-      }
-      case 'GPSLatitudeRef':
-        GPSLatitudeRef = tag
-        if (tags['GPSLatitude'] && tag == 'S' && isDD)
-          tags['GPSLatitude'] = tags['GPSLatitude'] * -1
-        break
-      case 'GPSLongitudeRef':
-        GPSLongitudeRef = tag
-        if (tags['GPSLongitude'] && tag == 'W' && isDD)
-          tags['GPSLongitude'] = tags['GPSLongitude'] * -1
-        break
-      case 'GPSLatitude': {
-        if (isDD) {
-          const [deg,min,sec] = tag
-          tag = dms2dd(deg, min, sec, GPSLatitudeRef)
-        }
-        break
-      }
-      case 'GPSLongitude': {
-        if (isDD) {
-          const [deg,min,sec] = tag
-          tag = dms2dd(deg, min, sec, GPSLongitudeRef)
-        }
-        break
       }}
       tags[tagName] = tag
+    }
+    if (coordinates == 'dd') {
+      if (tags['GPSLongitude']) {
+        const [deg,min,sec] = tags['GPSLongitude']
+        tags['GPSLongitude'] = dms2dd(deg, min, sec, tags['GPSLongitudeRef'])
+      }
+      if (tags['GPSLatitude']) {
+        const [deg,min,sec] = tags['GPSLatitude']
+        tags['GPSLatitude'] = dms2dd(deg, min, sec, tags['GPSLatitudeRef'])
+      }
     }
   }
 
