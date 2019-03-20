@@ -50,7 +50,7 @@ function readTagValue(file, entryOffset, tiffStart, bigEnd) {
   case 1: // byte, 8-bit unsigned int
   case 7: // undefined, 8-bit byte, value depending on field
     if (numValues == 1) {
-      return file.getUint8(entryOffset + 8, !bigEnd)
+      return file.getUint8(entryOffset + 8)
     } else {
       offset = numValues > 4 ? valueOffset: (entryOffset + 8)
       vals = []

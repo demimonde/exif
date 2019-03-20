@@ -8,9 +8,9 @@ const T = {
   'is a function'() {
     equal(typeof exif, 'function')
   },
-  async '!handles a JPG file'({ photo }) {
+  async 'handles a JPG file'({ photo }) {
     const res = handleBinaryFile(photo)
-    return res
+    return JSON.parse(JSON.stringify(res))
   },
   async 'gets a link to the fixture'({ FIXTURE }) {
     // const res = await exif({

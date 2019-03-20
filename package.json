@@ -13,6 +13,7 @@
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc documentary -o README.md",
     "b": "alamode src -o build -s",
+    "depack": "depack-dev depack.js -c -o dist/exif.js -a --isolation_mode IIFE",
     "d": "yarn-s d1",
     "d1": "NODE_DEBUG=doc doc src/index.js -g",
     "build": "yarn-s d b doc",
@@ -39,6 +40,10 @@
   },
   "homepage": "https://github.com/demimonde/exif#readme",
   "devDependencies": {
+    "@contexts/chrome": "1.0.0",
+    "@depack/render": "1.1.4",
+    "@idio/core": "1.3.5",
+    "@idio/router": "1.3.0",
     "alamode": "1.8.6",
     "documentary": "1.22.0",
     "eslint-config-artdeco": "1.0.1",

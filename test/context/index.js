@@ -9,7 +9,7 @@ import { readBuffer } from '@wrote/read'
  */
 export default class Context {
   async _init() {
-    this.photo = (await readBuffer('test/fixture/photo.jpg')).buffer
+    this.photo = (await readBuffer('test/fixture/images/photo.jpg')).buffer
     // LOG('init context')
   }
   /**

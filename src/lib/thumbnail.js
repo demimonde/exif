@@ -5,7 +5,7 @@ import { readTags } from './'
  * @param {DataView} dataView
  * @param {number} tiffStart
  * @param {number} firstIFDOffset
- * @param {number} bigEnd
+ * @param {boolean} bigEnd
  */
 export default function readThumbnailImage(dataView, tiffStart, firstIFDOffset, bigEnd) {
   // get the IFD1 offset
