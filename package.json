@@ -1,7 +1,7 @@
 {
   "name": "@metadata/exif",
   "version": "0.0.0",
-  "description": "Reads Files Metadata In The Browser.",
+  "description": "[fork exif-js] Reads Files Metadata In The Browser. Optimised With Google Closure Compiler, BugFixes And New Features.",
   "main": "build/index.js",
   "module": "src/index.js",
   "scripts": {
@@ -33,7 +33,10 @@
   },
   "keywords": [
     "exif",
-    "metadata"
+    "metadata",
+    "files",
+    "photos",
+    "iptc"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
