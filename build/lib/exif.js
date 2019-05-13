@@ -9,8 +9,8 @@ const { dms2dd, getDate } = require('./util');
 const debug = false
 
 /**
- * @param {ArrayBuffer} file
- * @param {import('../index').Config} [config]
+ * @param {!ArrayBuffer} file
+ * @param {!_exif.HandleBinaryFile} [config]
  */
        function findEXIFinJPEG(file, config) {
   const dataView = new DataView(file)
@@ -49,9 +49,9 @@ const debug = false
 }
 
 /**
- * @param {DataView} file
+ * @param {!DataView} file
  * @param {number} start
- * @param {import('../index').Config} [config]
+ * @param {!_exif.HandleBinaryFile} [config]
  */
 function readEXIFData(file, start, config = {}) {
   const { coordinates = 'dms', parseDates = false } = config
@@ -306,5 +306,10 @@ const StringValues = {
     [6]: 'B',
   },
 }
+
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('../').HandleBinaryFile} _exif.HandleBinaryFile
+ */
 
 module.exports.findEXIFinJPEG = findEXIFinJPEG

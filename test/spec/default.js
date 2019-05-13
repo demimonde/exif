@@ -1,12 +1,33 @@
 import Context from '../context'
+import Zoroaster from 'zoroaster'
 import { handleBinaryFile } from '../../src'
 
 /** @type {Object.<string, (c: Context)>} */
 const T = {
+  context: class C extends Zoroaster {
+    static serialise(obj) {
+      return JSON.parse(JSON.stringify(obj))
+      // return Object.keys(obj).reduce((acc, key) => {
+      //   const val = obj[key]
+      //   if (val instanceof Date) {
+      //     acc[key] = val.toISOString()
+      //   } else if (val instanceof Number) {
+      //     acc[key] = parseInt(val)
+      //   } else if (Array.isArray(val)) {
+      //     acc[key] = val
+      //   } else if (typeof val == 'object') {
+      //     acc[key] = C.serialise(val)
+      //   }
+      //   else acc[key] = val
+      //   return acc
+      // }, {})
+    }
+  },
   persistentContext: Context,
   async 'handles a JPG file'({ photo }) {
     const res = handleBinaryFile(photo)
-    return JSON.parse(JSON.stringify(res))
+    return res
+    // return JSON.parse(JSON.stringify(res))
   },
   async 'returns dd coordinates'({ photo }) {
     const { data: {
@@ -26,9 +47,7 @@ const T = {
       parseDates: true,
     })
     return {
-      DateTime: DateTime.toISOString(),
-      DateTimeOriginal: DateTimeOriginal.toISOString(),
-      DateTimeDigitized: DateTimeDigitized.toISOString(),
+      DateTime, DateTimeOriginal, DateTimeDigitized,
     }
   },
   async 'gets a link to the fixture'({ FIXTURE }) {

@@ -1,10 +1,10 @@
-<types>
-  <type name="Config" desc="Options for the program.">
+<types namespace="_exif">
+  <type name="HandleBinaryFile" desc="Options for the `handleBinaryFile` method.">
     <prop boolean name="parseDates" default="false">
       Parse EXIF dates into JS dates.
     </prop>
-    <prop type="('dms'|'dd')" name="coordinates" default="dms">
-      Return coordinates either as DMS (degrees, minutes, seconds) or DD (decimal degrees).
+    <prop string name="coordinates" default="dms">
+      Return coordinates either as DMS (degrees, minutes, seconds) or DD (decimal degrees). Specified as `'dms'` or `'dd'`.
     </prop>
   </type>
 </types>
