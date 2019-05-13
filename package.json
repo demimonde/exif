@@ -1,7 +1,7 @@
 {
   "name": "@metadata/exif",
   "version": "0.0.0",
-  "description": "[fork exif-js] Reads Files Metadata In The Browser. Optimised With Google Closure Compiler, BugFixes And New Features.",
+  "description": "[fork exif-js] Reads Files Metadata In The Browser And Node.JS. Optimised With Google Closure Compiler, BugFixes And New Features.",
   "main": "build/index.js",
   "module": "src/index.js",
   "scripts": {
@@ -18,7 +18,6 @@
     "d1": "typal src/index.js -c",
     "externs": "typal types/externs.js",
     "build": "yarn-s d b doc",
-    "rec": "NODE_DEBUG=appshot appshot -T 23 -a Terminal -y 150 -f",
     "e": "node example",
     "example/": "yarn e example/example.js"
   },
@@ -27,6 +26,7 @@
     "src",
     "types/externs.js"
   ],
+  "externs": "types/externs.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/demimonde/exif.git"
