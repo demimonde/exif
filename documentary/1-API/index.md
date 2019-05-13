@@ -16,7 +16,7 @@ import { handleBinaryData } from '@metadata/exif'
 
 %~%
 
-```## handleBinaryData
+```## handleBinaryData => { data, iptcdata }
 [
   ["binFile", "ArrayBuffer"],
   ["config?", "HandleBinaryFile"]
